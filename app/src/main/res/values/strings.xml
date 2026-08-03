@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">POS</string>
+    <!-- Actual Web Client ID from google-services.json (client_type: 3) -->
+    <string name="default_web_client_id">750655070755-qg0gh1sh1527djns6t921qo12r72oln1.apps.googleusercontent.com</string>
+</resources>
