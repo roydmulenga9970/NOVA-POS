@@ -19,14 +19,24 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Decode release keystore
+        env:
+          RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
+        run: echo "$RELEASE_KEYSTORE" | base64 --decode > releasekey-new.jks
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build APK
+      - name: Build Release APK
+        env:
+          KEYSTORE_FILE: releasekey-new.jks
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: ./gradlew assembleRelease
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: app-release-apk
-          path: app/build/outputs/apk/Release/*.apk
+          path: app/build/outputs/apk/release/*.apk

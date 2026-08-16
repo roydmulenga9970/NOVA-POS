@@ -28,13 +28,12 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file("/home/elonmusk/AndroidStudioProjects/releasekey.jks")
-            storePassword = project.findProperty("KEYSTORE_PASSWORD")?.toString() ?: ""
-            keyAlias = project.findProperty("KEY_ALIAS")?.toString() ?: ""
-            keyPassword = project.findProperty("KEY_PASSWORD")?.toString() ?: ""
+            storeFile = file(System.getenv("KEYSTORE_FILE") ?: "releasekey-new.jks")
+            storePassword = System.getenv("KEYSTORE_PASSWORD") ?: ""
+            keyAlias = System.getenv("KEY_ALIAS") ?: ""
+            keyPassword = System.getenv("KEY_PASSWORD") ?: ""
         }
     }
-
     buildTypes {
         release {
             isMinifyEnabled = true
